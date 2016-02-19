@@ -1,0 +1,17 @@
+{
+  "name": "FChatLib",
+  "version": "0.1.0",
+  "description": "FChatLib",
+  "main": "app.js",
+  "author": {
+    "name": "AelithBlanchett",
+    "email": ""
+  },
+  "dependencies": {
+    "async": "^1.5.2",
+    "ws": "*",
+    "request": "*",
+    "throttle-function": "*",
+    "glob": "*"
+  }
+}
