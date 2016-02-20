@@ -7,6 +7,10 @@
     "name": "AelithBlanchett",
     "email": "tonyteur@yahoo.fr"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AelithBlanchett/fchatlib.git"
+  },
   "dependencies": {
     "async": "^1.5.2",
     "ws": "*",
