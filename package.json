@@ -1,6 +1,6 @@
 {
   "name": "fchatlib",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "FChatLib",
   "main": "lib/libfchat.js",
   "author": {
