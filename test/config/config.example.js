@@ -3,7 +3,7 @@
 config.user = 'username';
 config.password = 'password';
 config.character = 'your_character';
-config.room = "room_to_join";
+config.room = ["room_to_join"];
 config.cname = "my_bots_client_name";
 config.cversion = "0.0.1";
 
