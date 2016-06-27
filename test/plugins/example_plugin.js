@@ -1,17 +1,17 @@
 var uuid = require('uuid');
 
-module.exports = function (parent, args) {
+module.exports = function (parent, channel) {
     var fChatLibInstance = parent;
 
     var cmdHandler = {};
 
-    cmdHandler.myString = "";
+    cmdHandler.channel = channel;
 
     cmdHandler.randomId = uuid.v4();
 
     cmdHandler.hello = function (args, data) {
         var word = args || "everyone";
-        fChatLibInstance.sendMessage(data.character +" wishes Bonjour! to "+word, data.channel);
+        fChatLibInstance.sendMessage(data.character +" wishes Bonjour! to "+word+ " in "+cmdHandler.channel, data.channel);
     };
 
     cmdHandler.random = function(args, data){
