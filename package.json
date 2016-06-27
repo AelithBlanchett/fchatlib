@@ -16,6 +16,7 @@
     "ws": "*",
     "request": "*",
     "throttle-function": "*",
-    "glob": "*"
+    "glob": "*",
+    "require-new": "*"
   }
 }
