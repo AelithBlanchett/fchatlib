@@ -1,6 +1,6 @@
 {
   "name": "fchatlib",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "FChatLib",
   "main": "lib/libfchat.js",
   "author": {
@@ -13,10 +13,11 @@
   },
   "dependencies": {
     "async": "^1.5.2",
-    "ws": "*",
-    "request": "*",
-    "throttle-function": "*",
     "glob": "*",
-    "require-new": "*"
+    "jsonfile": "^2.3.1",
+    "request": "*",
+    "require-new": "*",
+    "throttle-function": "*",
+    "ws": "*"
   }
 }
