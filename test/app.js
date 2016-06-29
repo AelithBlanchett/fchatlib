@@ -1,4 +1,4 @@
 var FChatLib = require('../lib/libfchat');
-var myFchatBot = new FChatLib(__dirname+'/config/config.js');
-myFchatBot.connect();
+var options = require(__dirname+'/config/config.js');
+var myFchatBot = new FChatLib(options);
 console.log("ok");
