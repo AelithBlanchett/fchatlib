@@ -2,7 +2,8 @@
 
 config.user = 'username';
 config.password = 'password';
-config.character = 'your_character';
+config.character = 'your_character_the_bot_will_use';
+config.master = 'your_character';
 
 /* optional parameters
 config.cname = "my_bots_client_name";
