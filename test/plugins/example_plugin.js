@@ -22,7 +22,14 @@ module.exports = function (parent, channel) {
         fChatLibInstance.sendMessage("Wow! "+args.character+" just rolled a "+args.endresult+" !", args.channel);
     }
 
+    function msgListen(parent, args, channel){
+        fChatLibInstance.sendMessage("This guy sent a message "+args.character, args.channel);
+    }
+
     fChatLibInstance.addRollListener(rollListener);
+
+    //disabled in order to stop the spam, but the implementation's there.
+    //fChatLibInstance.addMessageListener(msgListen);
 
     return cmdHandler;
 };
