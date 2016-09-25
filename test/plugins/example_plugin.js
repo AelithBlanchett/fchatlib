@@ -1,35 +1,42 @@
 var uuid = require('uuid');
+var _this;
 
-module.exports = function (parent, channel) {
-    var fChatLibInstance = parent;
+var CommandHandler = (function () {
+    function CommandHandler(fChatLib, chan) {
+        this.fChatLibInstance = fChatLib;
+        this.fChatLibInstance.addRollListener(rollListener);
+        this.channel = chan;
+        _this = this;
+    }
 
-    var cmdHandler = {};
+    this.randomId = uuid.v4();
 
-    cmdHandler.channel = channel;
-
-    cmdHandler.randomId = uuid.v4();
-
-    cmdHandler.hello = function (args, data) {
+    CommandHandler.prototype.hello = function (args, data) {
         var word = args || "everyone";
-        fChatLibInstance.sendMessage(data.character +" wishes Bonjour! to "+word+ " in "+cmdHandler.channel, data.channel);
+        _this.fChatLibInstance.sendMessage(data.character +" wishes Bonjour! to "+word+ " in "+cmdHandler.channel, data.channel);
     };
 
-    cmdHandler.random = function(args, data){
-        fChatLibInstance.sendMessage("Random seed: "+this.randomId.toString(), data.channel);
-    }
+    CommandHandler.prototype.random = function(args, data){
+        _this.fChatLibInstance.sendMessage("Random seed: "+this.randomId.toString(), data.channel);
+    };
 
-    function rollListener(parent, args){
-        fChatLibInstance.sendMessage("Wow! "+args.character+" just rolled a "+args.endresult+" !", args.channel);
-    }
+    var rollListener = function(parent, args){
+        _this.fChatLibInstance.sendMessage("Wow! "+args.character+" just rolled a "+args.endresult+" !", args.channel);
+    };
 
-    function msgListen(parent, args, channel){
-        fChatLibInstance.sendMessage("This guy sent a message "+args.character, args.channel);
-    }
+    var msgListen = function(parent, args, channel){
+        _this.fChatLibInstance.sendMessage("This guy sent a message "+args.character, args.channel);
+    };
 
-    fChatLibInstance.addRollListener(rollListener);
+
 
     //disabled in order to stop the spam, but the implementation's there.
     //fChatLibInstance.addMessageListener(msgListen);
 
+    return CommandHandler;
+}());
+
+module.exports = function (parent, channel) {
+    var cmdHandler = new CommandHandler(parent, channel);
     return cmdHandler;
 };

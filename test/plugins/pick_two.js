@@ -1,22 +1,31 @@
-module.exports = function (parent) {
-    var fChatLibInstance = parent;
+var _this;
 
-    var cmdHandler = {};
+var CommandHandler = (function () {
+    function CommandHandler(fChatLib, chan) {
+        this.fChatLibInstance = fChatLib;
+        this.channel = chan;
+        _this = this;
+    }
 
-    cmdHandler.wrestle = function (args, data) {
-        if(fChatLibInstance.getUserList(data.channel).length < 3){fChatLibInstance.sendMessage('There aren\'t enough wrestlers here!', data.channel); return; }
+    CommandHandler.prototype.wrestle = function (args, data) {
+        if(_this.fChatLibInstance.getUserList(data.channel).length < 3){_this.fChatLibInstance.sendMessage('There aren\'t enough wrestlers here!', data.channel); return; }
         var idFirstWrestler;
         do{
-            idFirstWrestler = getRandomInt(0,fChatLibInstance.getUserList(data.channel).length);
-        }while(fChatLibInstance.getUserList(data.channel)[idFirstWrestler] == parent.config.character)
+            idFirstWrestler = getRandomInt(0,_this.fChatLibInstance.getUserList(data.channel).length);
+        }while(_this.fChatLibInstance.getUserList(data.channel)[idFirstWrestler] == _this.fChatLibInstance.config.character)
         var idSecondWrestler;
         do{
-           idSecondWrestler = getRandomInt(0,fChatLibInstance.getUserList(data.channel).length);
-        }while(idSecondWrestler == idFirstWrestler || fChatLibInstance.getUserList(data.channel)[idSecondWrestler] == parent.config.character)
+           idSecondWrestler = getRandomInt(0,_this.fChatLibInstance.getUserList(data.channel).length);
+        }while(idSecondWrestler == idFirstWrestler || _this.fChatLibInstance.getUserList(data.channel)[idSecondWrestler] == parent.config.character)
 
-        fChatLibInstance.sendMessage('I think that... '+fChatLibInstance.getUserList(data.channel)[idFirstWrestler]+' should fight '+fChatLibInstance.getUserList(data.channel)[idSecondWrestler]+'!', data.channel);
+        _this.fChatLibInstance.sendMessage('I think that... '+_this.fChatLibInstance.getUserList(data.channel)[idFirstWrestler]+' should fight '+_this.fChatLibInstance.getUserList(data.channel)[idSecondWrestler]+'!', data.channel);
     };
 
+    return CommandHandler;
+}());
+
+module.exports = function (parent, channel) {
+    var cmdHandler = new CommandHandler(parent, channel);
     return cmdHandler;
 };
 
