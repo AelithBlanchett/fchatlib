@@ -17,7 +17,7 @@ var CommandHandler = (function () {
     };
 
     CommandHandler.prototype.random = function(args, data){
-        _this.fChatLibInstance.sendMessage("Random seed: "+this.randomId.toString(), data.channel);
+        _this.fChatLibInstance.sendMessage("Random seed: "+_this.randomId.toString(), data.channel);
     };
 
     var rollListener = function(parent, args){
