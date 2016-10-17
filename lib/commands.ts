@@ -1,5 +1,5 @@
 var glob = require("glob");
-var requireNew = require('require-new');
+var requireNew = require('require-clean');
 var jsonfile = require('jsonfile');
 var fs = require('fs');
 var path = require('path');
@@ -194,7 +194,6 @@ commandHandler.flushpluginslist = function (args, data) {
  */
 function loadPlugin(pluginName){
     try {
-        console.log(__dirname);
         var file = requireNew(pluginName);
         var strAddedCommands = "";
         var newHandler = new file(fChatLibInstance, channelName);
