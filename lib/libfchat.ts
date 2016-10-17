@@ -576,7 +576,9 @@ class FChatLib {
         });
 
         this.ws.on('message', function (data, flags) {
-            //console.log(data);
+            if(this.config.debug){
+                console.log(data);
+            }
             if (data != null) {
                 this.command = this.argument = "";
                 this.command = splitOnce(data, " ")[0].trim();
