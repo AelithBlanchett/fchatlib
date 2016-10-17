@@ -576,7 +576,7 @@ class FChatLib {
         });
 
         this.ws.on('message', function (data, flags) {
-            if(this.config.debug){
+            if(parent.config.debug){
                 console.log(data);
             }
             if (data != null) {
