@@ -516,6 +516,10 @@ class FChatLib {
         return (parent.getChatOPList(channel).indexOf(username) != -1 || username == parent.config.master);
     }
 
+    isUserMaster(username, channel){
+        return (username == parent.config.master);
+    }
+
     disconnect(){
         this.ws.close();
     }

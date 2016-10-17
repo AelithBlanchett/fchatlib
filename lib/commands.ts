@@ -101,6 +101,16 @@ commandHandler.gjoinchannel = function (args, data) {
     }
 };
 
+commandHandler.gstatus = function (args, data) {
+    if(data.character == fChatLibInstance.config.master){
+        var splittedArgs = args.split(" ");
+        fChatLibInstance.setStatus(splittedArgs[0], splittedArgs[1]); //need validation
+    }
+    else{
+        fChatLibInstance.sendMessage('You don\'t have sufficient rights.', data.channel);
+    }
+};
+
 commandHandler.list = function (args, data) {
     var userList = fChatLibInstance.getUserList(data.channel);
     var str="";
@@ -156,6 +166,15 @@ commandHandler.loadedplugins = function (args, data) {
 commandHandler.unloadplugin = function (args, data) {
     if(fChatLibInstance.isUserChatOP(data.character, data.channel)){
         unloadPlugin(args);
+    }
+    else{
+        fChatLibInstance.sendMessage('You don\'t have sufficient rights.', data.channel);
+    }
+};
+
+commandHandler.updateplugins = function (args, data) {
+    if(fChatLibInstance.isUserChatOP(data.character, data.channel)){
+        updatePlugins();
     }
     else{
         fChatLibInstance.sendMessage('You don\'t have sufficient rights.', data.channel);
@@ -227,9 +246,17 @@ function loadPlugin(pluginName){
     }
 }
 
-function listAvailablePlugins() {
-    var pluginNames = [];
-    return 'The following plugins are available: '+pluginNames.join(', ')+'\nIf you want to load all plugins, enter * as the plugin name.';
+function updatePlugins(){
+    var exec = require('child_process').exec;
+    child = exec('npm update',
+        function (error, stdout, stderr) {
+            if (error !== null) {
+                fChatLibInstance.throwError('Plugins update', error, channelName);
+            }
+            else{
+                fChatLibInstance.sendMessage("Plugins updated.", channelName);
+            }
+        });
 }
 
 function unloadPlugin(pluginName){
