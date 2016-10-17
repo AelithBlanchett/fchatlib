@@ -485,7 +485,7 @@ class FChatLib {
         parent.sendData('MSG', json);
     }
 
-    sendPrivMessage(character, message){
+    sendPrivMessage(message, character){
         let json = {};
         json.message = message;
         json.recipient = character;
