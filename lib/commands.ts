@@ -269,7 +269,7 @@ function loadPluginOnStart(pluginsArray) {
     for (var i = 0; i < pluginsArray.length; i++) {
 
         try {
-            var file = requireNew(pluginName);
+            var file = requireNew(pluginsArray[i]);
             var newHandler = new file(fChatLibInstance, channelName);
             var cmdList = Object.getPrototypeOf(newHandler);
             //lowercase alias
