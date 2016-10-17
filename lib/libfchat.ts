@@ -1,7 +1,7 @@
 ﻿'use strict';
 var WebSocket = require('ws');
 var request = require("request");
-var requireNew = require('require-new');
+var requireNew = require('require-clean');
 var jsonfile = require('jsonfile');
 var fs = require('fs');
 const throttle = require('throttle-function');
