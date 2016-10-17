@@ -132,7 +132,7 @@ commandHandler.listops = function (args, data) {
 };
 
 commandHandler.loadplugin = function (args, data) {
-    if(fChatLibInstance.isUserChatOP(data.character, data.channel)){
+    if(data.character == fChatLibInstance.config.master){
         if(args == undefined || args == ""){
             fChatLibInstance.sendMessage("Wrong parameter. Example: !loadplugin pluginname", data.channel);
         }
@@ -155,7 +155,7 @@ commandHandler.loadedplugins = function (args, data) {
 };
 
 commandHandler.unloadplugin = function (args, data) {
-    if(fChatLibInstance.isUserChatOP(data.character, data.channel)){
+    if(data.character == fChatLibInstance.config.master){
         unloadPlugin(args);
     }
     else{
@@ -194,9 +194,9 @@ commandHandler.flushpluginslist = function (args, data) {
  */
 function loadPlugin(pluginName){
     try {
-        var file = require(pluginName);
+        var file = requireNew(pluginName);
         var strAddedCommands = "";
-        var newHandler = requireNew(file)(fChatLibInstance, channelName);
+        var newHandler = new file(fChatLibInstance, channelName);
         var cmdList = Object.getPrototypeOf(newHandler);
 
         //lowercase alias
@@ -231,7 +231,7 @@ function loadPlugin(pluginName){
             fChatLibInstance.sendMessage("Plugin "+pluginName+" couldn't be found", channelName);
         }
         else{
-            fChatLibInstance.throwError("!loadplugin", ex, channelName);
+            fChatLibInstance.throwError("!loadplugin", ex.toString(), channelName);
         }
 
     }
@@ -269,8 +269,8 @@ function loadPluginOnStart(pluginsArray) {
     for (var i = 0; i < pluginsArray.length; i++) {
 
         try {
-            var file = require(pluginsArray[i]);
-            var newHandler = requireNew(file)(fChatLibInstance, channelName);
+            var file = requireNew(pluginName);
+            var newHandler = new file(fChatLibInstance, channelName);
             var cmdList = Object.getPrototypeOf(newHandler);
             //lowercase alias
             for(var j = 0; j < Object.getOwnPropertyNames(cmdList).length; j++){
@@ -287,7 +287,7 @@ function loadPluginOnStart(pluginsArray) {
                 fChatLibInstance.sendMessage("Plugin "+pluginsArray[i]+" couldn't be found", channelName);
             }
             else{
-                fChatLibInstance.throwError("loadPluginOnStart", ex, channelName);
+                fChatLibInstance.throwError("loadPluginOnStart", ex.toString(), channelName);
             }
 
         }
