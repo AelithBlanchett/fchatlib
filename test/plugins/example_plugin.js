@@ -6,18 +6,17 @@ var CommandHandler = (function () {
         this.fChatLibInstance = fChatLib;
         this.fChatLibInstance.addRollListener(rollListener);
         this.channel = chan;
+        this.randomId = uuid.v4();
         _this = this;
     }
 
-    this.randomId = uuid.v4();
-
     CommandHandler.prototype.hello = function (args, data) {
         var word = args || "everyone";
-        _this.fChatLibInstance.sendMessage(data.character +" wishes Bonjour! to "+word+ " in "+cmdHandler.channel, data.channel);
+        _this.fChatLibInstance.sendMessage(data.character +" wishes Bonjour! to "+word+ " in " + data.channel, data.channel);
     };
 
     CommandHandler.prototype.random = function(args, data){
-        _this.fChatLibInstance.sendMessage("Random seed: "+_this.randomId.toString(), data.channel);
+        _this.fChatLibInstance.sendMessage("Random seedu: "+_this.randomId.toString(), data.channel);
     };
 
     var rollListener = function(parent, args){

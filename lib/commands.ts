@@ -104,7 +104,7 @@ commandHandler.gjoinchannel = function (args, data) {
 commandHandler.gstatus = function (args, data) {
     if(data.character == fChatLibInstance.config.master){
         var splittedArgs = args.split(" ");
-        fChatLibInstance.setStatus(splittedArgs[0], splittedArgs[1]); //need validation
+        fChatLibInstance.setStatus(splittedArgs.shift(), splittedArgs.join(" ")); //need validation
     }
     else{
         fChatLibInstance.sendMessage('You don\'t have sufficient rights.', data.channel);
@@ -194,6 +194,7 @@ commandHandler.flushpluginslist = function (args, data) {
  */
 function loadPlugin(pluginName){
     try {
+        console.log(__dirname);
         var file = requireNew(pluginName);
         var strAddedCommands = "";
         var newHandler = new file(fChatLibInstance, channelName);
