@@ -131,19 +131,10 @@ commandHandler.listops = function (args, data) {
     fChatLibInstance.sendMessage('Here are the current operators in the room:'+str, data.channel);
 };
 
-commandHandler.availableplugins = function (args, data) {
-    if(fChatLibInstance.isUserChatOP(data.character, data.channel)){
-        fChatLibInstance.sendMessage(listAvailablePlugins(), data.channel);
-    }
-    else{
-        fChatLibInstance.sendMessage('You don\'t have sufficient rights.', data.channel);
-    }
-};
-
 commandHandler.loadplugin = function (args, data) {
     if(fChatLibInstance.isUserChatOP(data.character, data.channel)){
         if(args == undefined || args == ""){
-            fChatLibInstance.sendMessage("Wrong parameter. Example: !loadplugin pluginname\n"+listAvailablePlugins(), data.channel);
+            fChatLibInstance.sendMessage("Wrong parameter. Example: !loadplugin pluginname", data.channel);
         }
         else{
             loadPlugin(args);
