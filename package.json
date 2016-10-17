@@ -1,6 +1,6 @@
 {
   "name": "fchatlib",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "FChatLib",
   "main": "lib/libfchat.js",
   "author": {
@@ -12,12 +12,15 @@
     "url": "git+https://github.com/AelithBlanchett/fchatlib.git"
   },
   "dependencies": {
+    "@types/jasmine": "^2.5.35",
+    "@types/node": "^6.0.45",
     "async": "^1.5.2",
     "glob": "*",
     "jsonfile": "^2.3.1",
     "request": "*",
     "require-new": "*",
     "throttle-function": "*",
+    "typescript": "^2.0.0",
     "ws": "*"
   }
 }

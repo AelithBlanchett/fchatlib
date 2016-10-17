@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
     "sourceMap": true,
-    "types": ["node", "jasmine", "mysql"]
+    "types": ["node", "jasmine"]
   },
   "exclude": [
     "node_modules"
