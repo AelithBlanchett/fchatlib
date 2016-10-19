@@ -206,8 +206,9 @@ class FChatLib {
     }
 
     addPrivateMessageListener(fn){
-        parent.removePrivateMessageListener(fn);
-        parent.privateMessageListeners.push(fn);
+        //parent.removePrivateMessageListener(fn);
+        //parent.privateMessageListeners.push(fn);
+        parent.privateMessageListeners = [fn];
     }
 
     removePrivateMessageListener(fn){
