@@ -1,16 +1,16 @@
 ﻿'use strict';
 let WebSocketClient = require('ws');
-var request = require("request");
-var requireNew = require('require-clean');
-var jsonfile = require('jsonfile');
-var fs = require('fs');
+let request = require("request");
+let requireNew = require('require-clean');
+let jsonfile = require('jsonfile');
+let fs = require('fs');
 const throttle = require('throttle-function');
-var pingInterval;
-var configDir = process.cwd()+"/config";
-var fileRoomsJs = "/config.rooms.js";
+let pingInterval;
+let configDir = process.cwd()+"/config";
+let fileRoomsJs = "/config.rooms.js";
 
 
-class FChatLib {
+export class FChatLib {
 
     addConnectionListener(fn){
         this.removeConnectionListener(fn);

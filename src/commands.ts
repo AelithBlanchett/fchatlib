@@ -6,7 +6,7 @@ let path = require('path');
 let firstStart = true;
 let pluginsLoaded = [];
 let commandHandler:any = {};
-let fChatLibInstance = {};
+let fChatLibInstance:any = {};
 let channelName = "";
 let fileDir;
 let fileName;
@@ -194,13 +194,13 @@ commandHandler.flushpluginslist = function (args, data) {
  */
 function loadPlugin(pluginName){
     try {
-        var file = requireNew(pluginName);
-        var strAddedCommands = "";
-        var newHandler = new file(fChatLibInstance, channelName);
-        var cmdList = Object.getPrototypeOf(newHandler);
+        let file = requireNew(pluginName);
+        let strAddedCommands = "";
+        let newHandler:Object = new file(fChatLibInstance, channelName);
+        let cmdList = Object.getPrototypeOf(newHandler);
 
         //lowercase alias
-        for (var j = 0; j < Object.getOwnPropertyNames(cmdList).length; j++) {
+        for (let j = 0; j < Object.getOwnPropertyNames(cmdList).length; j++) {
             if (Object.getOwnPropertyNames(cmdList)[j].toLowerCase() == "constructor") { //we don't need that
                 cmdList.constructor = null;
             }
@@ -211,8 +211,8 @@ function loadPlugin(pluginName){
                 }
             }
         }
-        newHandler = Object.assign(newHandler, cmdList);
-        commandHandler = Object.assign(newHandler, commandHandler);
+        newHandler = (<any>Object).assign(newHandler, cmdList);
+        commandHandler = (<any>Object).assign(newHandler, commandHandler);
 
         strAddedCommands = strAddedCommands.substr(0, strAddedCommands.length - 2);
         if (strAddedCommands == "") {
@@ -239,7 +239,7 @@ function loadPlugin(pluginName){
 
 function updatePlugins(){
     var exec = require('child_process').exec;
-    child = exec('npm update',
+    let child = exec('npm update',
         function (error, stdout, stderr) {
             if (error !== null) {
                 fChatLibInstance.throwError('Plugins update', error, channelName);
@@ -279,8 +279,8 @@ function loadPluginOnStart(pluginsArray) {
                     cmdList[Object.getOwnPropertyNames(cmdList)[j].toLowerCase()] = cmdList[Object.getOwnPropertyNames(cmdList)[j]];
                 }
             }
-            newHandler = Object.assign(newHandler, cmdList);
-            commandHandler = Object.assign(newHandler,commandHandler);
+            newHandler = (<any>Object).assign(newHandler, cmdList);
+            commandHandler = (<any>Object).assign(newHandler,commandHandler);
         }
         catch(ex){
             if(ex && ex.code == "MODULE_NOT_FOUND"){
@@ -295,15 +295,18 @@ function loadPluginOnStart(pluginsArray) {
 }
 
 function getUptime() {
-    var sec_num = parseInt(process.uptime(), 10); // don't forget the second param
-    var hours   = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+    let sec_num = parseInt(process.uptime().toString(), 10); // don't forget the second param
+    let hours   = Math.floor(sec_num / 3600);
+    let minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    let seconds = sec_num - (hours * 3600) - (minutes * 60);
+    let hoursString   = "";
+    let minutesString = "";
+    let secondsString = "";
 
-    if (hours   < 10) {hours   = "0"+hours;}
-    if (minutes < 10) {minutes = "0"+minutes;}
-    if (seconds < 10) {seconds = "0"+seconds;}
-    return hours+':'+minutes+':'+seconds;
+    if (hours   < 10) {hoursString   = "0"+hours;}
+    if (minutes < 10) {minutesString = "0"+minutes;}
+    if (seconds < 10) {secondsString = "0"+seconds;}
+    return hoursString+':'+minutesString+':'+secondsString;
 }
 
 

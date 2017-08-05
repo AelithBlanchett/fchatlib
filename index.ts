@@ -1,2 +1,2 @@
-import {FChatLib} from 'src/libfchat'; //test
+import {FChatLib} from './src/FChatLib'
 module.exports = FChatLib;
