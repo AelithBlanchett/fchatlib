@@ -1,15 +1,15 @@
-var glob = require("glob");
+let glob = require("glob");
 var requireNew = require('require-clean');
 var jsonfile = require('jsonfile');
 var fs = require('fs');
-var path = require('path');
-var firstStart = true;
-var pluginsLoaded = [];
-var commandHandler = {};
-var fChatLibInstance = {};
-var channelName = "";
-var fileDir;
-var fileName;
+let path = require('path');
+let firstStart = true;
+let pluginsLoaded = [];
+let commandHandler:any = {};
+let fChatLibInstance = {};
+let channelName = "";
+let fileDir;
+let fileName;
 
 /*
  * Default commands
