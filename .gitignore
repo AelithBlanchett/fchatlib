@@ -1,6 +1,5 @@
 dist/test/config/config.js
 config.rooms.js
-Config.ts
 .idea/
 dist/index.d.ts
 dist/index.js
@@ -16,3 +15,4 @@ dist/test/myTypescriptApp.js
 dist/test/myTypescriptApp.js.map
 dist/test/plugins/
 node_modules/
+/test/config/Config.ts
