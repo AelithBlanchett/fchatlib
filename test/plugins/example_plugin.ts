@@ -1,4 +1,4 @@
-var uuid = require('uuid');
+let uuid = require('uuid');
 
 export class CommandHandler {
     fChatLibInstance: any;
@@ -7,7 +7,7 @@ export class CommandHandler {
 
     constructor(fChatLib, chan) {
         this.fChatLibInstance = fChatLib;
-        this.fChatLibInstance.addRollListener((args, data) => {
+        this.fChatLibInstance.addRollListener((data) => {
             this.fChatLibInstance.sendMessage("Random seed: " + this.randomId.toString(), data.channel);
         });
         this.channel = chan;
@@ -15,11 +15,11 @@ export class CommandHandler {
     }
 
     hello(args, data) {
-        var word = args || "everyone";
+        let word = args || "everyone";
         this.fChatLibInstance.sendMessage(data.character + " wishes Bonjour! to " + word + " in " + data.channel, data.channel);
     };
 
     rng(args, data) {
-        this.fChatLibInstance.sendMessage("Random seed: "+this.randomId, data.channel);
+        this.fChatLibInstance.sendMessage("Random seed: "+this.randomId.toString(), data.channel);
     };
 }

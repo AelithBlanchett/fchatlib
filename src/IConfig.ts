@@ -6,6 +6,6 @@ interface IConfig{
     cname:string;
     cversion:string;
     room:string;
-    autoJoinOnInvite:string;
-    debug:string;
+    autoJoinOnInvite:boolean;
+    debug:boolean;
 }

@@ -2,7 +2,7 @@
   "name": "fchatlib",
   "version": "0.6.2",
   "description": "FChatLib",
-  "main": "lib/libfchat.js",
+  "main": "dist/index.js",
   "author": {
     "name": "AelithBlanchett",
     "email": "tonyteur@yahoo.fr"
