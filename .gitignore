@@ -1,9 +1,5 @@
-dist/test/config/config.js
-config.rooms.js
+dist/test/config/Config.js
 .idea/
-dist/index.d.ts
-dist/index.js
-dist/index.js.map
 dist/src/
 dist/test/config/Config.d.ts
 dist/test/config/Config.example.d.ts
