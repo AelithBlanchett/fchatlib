@@ -1,9 +1,9 @@
 {
   "name": "fchatlib",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "FChatLib",
-  "main": "dist/FChatLib.js",
-  "types": "dist/FChatLib.d.ts",
+  "main": "dist/src/FChatLib.js",
+  "types": "dist/src/FChatLib.d.ts",
   "author": {
     "name": "AelithBlanchett",
     "email": "tonyteur@yahoo.fr"
