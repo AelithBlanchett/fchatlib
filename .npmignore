@@ -50,5 +50,4 @@ jspm_packages
 
 
 #Own files
-dist/test/config/Config.js
-test/config/Config.ts
+test

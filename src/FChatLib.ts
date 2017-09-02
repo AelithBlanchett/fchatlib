@@ -3,7 +3,6 @@ import CommandHandler from "./CommandHandler";
 import {IPlugin} from "./IPlugin";
 let WebSocketClient = require('ws');
 let request = require("request");
-let requireNew = require('require-clean');
 let jsonfile = require('jsonfile');
 let fs = require('fs');
 const throttle = require('throttle-function');

@@ -1,21 +1,24 @@
 ﻿# FChatLib
 
 
-Small library to work out with F-list's chat system.
+Small library written in Typescript to work out with F-list's chat system.
 
 There's already a working plugin example [here](https://github.com/AelithBlanchett/FChatBot-ExamplePlugin)
 
 ## How to start?
 
-0. [Install Node.JS](https://nodejs.org/en/)
+0. [Install Node.JS (tested with v8.4.0)](https://nodejs.org/en/)
 2. Open a console (Command invite on windows, or terminal on linux), then go to the directory where you extracted the files. (cd "C:\the\directory")
 3. Type 'npm install fchatlib --save'
 4. Let's start with the following app.js file.
+
 `
 var FChatLib = require('fchatlib');
 var options = {username: "MyAccount", password: "MyPassword", character: "MyNewShinyRobot", master: "YourCharacter", room: "ADH-someid"};
 var myFchatBot = new FChatLib(options);
+myFchatBot.connect();
 `
+
 Change the options variable, fill in your credentials, the character your bot show as, and the room ID where the bot will go first.
 If you don't know how to get that room ID I'm talking about, just open F-chat, go into the room you want to bot in, type /openroom to open it, then /code to get the code.
 The usual format for the code is like this: 'ADH-xxxxxxxxxxxxxxxxxxxx'
@@ -25,9 +28,8 @@ The usual format for the code is like this: 'ADH-xxxxxxxxxxxxxxxxxxxx'
 !loadplugin pluginname will load the plugin /plugins/pluginname.js
 Once the bot loads a plugin or joins a room, the bot will save and remember to connect to these rooms, and automatically load these plugins.
 6. Type '!loadplugin my_plugin' in the chat, and it will tell you which commands it has loaded.
-7. You should see that the !guide command has been added, so type it into the chat, and read its output.
-8. Once you have read it, you're ready to go! You can create another plugin just by creating a new .js file in the plugins folder.
-I'd advise you to copy/paste the [my_plugin]() plugin, and start from there. Remember to load it with !loadplugin yourplugin, and to
+I'd advise you to copy/paste the [my_plugin]() plugin, and start from there. 
+Remember to load it with !loadplugin yourplugin, and to
 reload it with !reloadplugins
 
 
@@ -40,6 +42,7 @@ Awaits the option parameter, with the following arguments:
 var options = {username = "", password = "", character = "", master = "", cname = "", cversion = ""}
 var FChatLib = require('fchatlib');
 var myFchatBot = new FChatLib(options);
+myFchatBot.connect();
 ```
 The required parameters are:
 
@@ -50,6 +53,14 @@ master determines which character will have the privileges for rebooting, reload
 The optional parameters are:
 cname is your bot's common name (surely used internally by F-list's),
 cversion is the bot's current version (surely used internally by F-list's)
+
+### `connect`
+
+Authenticates the bot with F-list's servers, and connects to the room you've specified in the options.
+If the bot had already been running in the past, it will connect to the previous rooms it had joined.
+```
+myFchatBot.connect();
+```
 
 ### `sendMessage`
 
