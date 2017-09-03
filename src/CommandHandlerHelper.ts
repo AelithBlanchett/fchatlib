@@ -17,7 +17,7 @@ export class CommandHandlerHelper{
             commandHandler.pluginsLoaded.splice(indexPluginAlreadyExists, 1);
         }
 
-        let path = process.cwd()+"\\plugins\\"+pluginName;
+        let path = process.cwd()+"/plugins/"+pluginName;
 
         try {
             let plugin:IPlugin = {name:"", instanciatedPlugin: {}};
@@ -94,7 +94,7 @@ export class CommandHandlerHelper{
                 commandHandler.pluginsLoaded.splice(indexPluginAlreadyExists, 1);
             }
 
-            let path = process.cwd()+"\\plugins\\"+plugin.name;
+            let path = process.cwd()+"/plugins/"+plugin.name;
             try {
                 let customPlugin = requireNew(path);
                 plugin.instanciatedPlugin = new customPlugin.CommandHandler(this.commandHandler.fChatLibInstance, this.commandHandler.channelName);
