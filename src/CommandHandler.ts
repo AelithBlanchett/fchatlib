@@ -27,7 +27,7 @@ export default class CommandHandler{
         if (data && data.message && data.message.length > 2 && data.message[0] == '!') {
 
             let opts = {
-                command: String(data.message.split(' ')[0]).replace('!', '').trim().toLowerCase(),
+                command: String(data.message.split(' ')[0]).replace('!', '').trim(),
                 argument: data.message.substring(String(data.message.split(' ')[0]).length).trim()
             };
 
@@ -37,7 +37,7 @@ export default class CommandHandler{
 
                 for(let plugin of this.pluginsLoaded){
                     for (let command of this.commandHandlerHelper.internalGetAllFuncs(plugin.instanciatedPlugin)) {
-                        if(command == opts.command){
+                        if(command === opts.command){
                             plugin.instanciatedPlugin[opts.command](opts.argument, data);
                             found = true;
                         }
