@@ -1,6 +1,6 @@
 {
   "name": "fchatlib",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "FChatLib",
   "main": "dist/src/FChatLib.js",
   "types": "dist/src/FChatLib.d.ts",
@@ -17,15 +17,17 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@types/jasmine": "^2.5.35",
-    "@types/node": "^6.0.45",
+    "@types/jasmine": "^2.5.54",
+    "@types/node": "^6.0.88",
     "async": "^1.5.2",
     "glob": "*",
+    "import-fresh": "^2.0.0",
     "jsonfile": "^2.3.1",
     "request": "*",
     "require-clean": "*",
     "throttle-function": "*",
-    "typescript": "^2.0.0",
+    "typescript": "^2.5.2",
+    "uuid": "^3.1.0",
     "ws": "*"
   }
 }

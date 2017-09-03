@@ -1,7 +1,7 @@
 import CommandHandler from "./CommandHandler";
 import {IPlugin} from "./IPlugin";
 
-let requireNew = require('require-clean');
+let requireNew = require('import-fresh');
 
 export class CommandHandlerHelper{
 
