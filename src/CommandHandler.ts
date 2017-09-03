@@ -37,7 +37,7 @@ export default class CommandHandler{
 
                 for(let plugin of this.pluginsLoaded){
                     for (let command of this.commandHandlerHelper.internalGetAllFuncs(plugin.instanciatedPlugin)) {
-                        if(command.toLowerCase() == opts.command.toLowerCase()){
+                        if(command == opts.command){
                             plugin.instanciatedPlugin[opts.command](opts.argument, data);
                             found = true;
                         }
