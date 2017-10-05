@@ -583,24 +583,7 @@ export default class FChatLib {
             fs.mkdirSync(configDir);
         }
 
-        let channelsNotContainingInstanciatedPlugins = this.channels;
-
-        let temporaryPluginHolder = [];
-
-        for(let key of channelsNotContainingInstanciatedPlugins.keys()){
-            for(let plugin of channelsNotContainingInstanciatedPlugins.get(key)){
-                temporaryPluginHolder[plugin.name] = plugin.instanciatedPlugin;
-                plugin.instanciatedPlugin = null;
-            }
-        }
-
-        jsonfile.writeFile(configDir+fileRoomsJs, [...channelsNotContainingInstanciatedPlugins]);
-
-        for(let key of channelsNotContainingInstanciatedPlugins.keys()){
-            for(let plugin of channelsNotContainingInstanciatedPlugins.get(key)){
-                plugin.instanciatedPlugin = temporaryPluginHolder[plugin.name];
-            }
-        }
+        jsonfile.writeFile(configDir+fileRoomsJs, [...this.channels]);
     }
 
 

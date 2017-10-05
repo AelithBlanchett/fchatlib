@@ -1,7 +1,7 @@
 import CommandHandler from "./CommandHandler";
 import {IPlugin} from "./IPlugin";
 
-let requireNew = require('import-fresh');
+import RequireClean from "./requireClean";
 
 export class CommandHandlerHelper{
 
@@ -21,8 +21,7 @@ export class CommandHandlerHelper{
 
         try {
             let plugin:IPlugin = {name:"", instanciatedPlugin: {}};
-
-            let customPlugin = requireNew(path);
+            let customPlugin:any = new RequireClean(path);
             plugin.instanciatedPlugin = new customPlugin.CommandHandler(this.commandHandler.fChatLibInstance, this.commandHandler.channelName);
             plugin.name = pluginName;
 
@@ -82,21 +81,21 @@ export class CommandHandlerHelper{
     }
 
 
-    internalLoadPluginOnStart(pluginsArray, commandHandler) {
+    internalLoadPluginOnStart(pluginsArray) {
         for (let i = 0; i < pluginsArray.length; i++) {
 
             let plugin:IPlugin = {name: "", instanciatedPlugin: {}};
 
             plugin.name = pluginsArray[i].name;
 
-            let indexPluginAlreadyExists = commandHandler.pluginsLoaded.findIndex(x => x.name == plugin.name);
+            let indexPluginAlreadyExists = this.commandHandler.pluginsLoaded.findIndex(x => x.name == plugin.name);
             if(indexPluginAlreadyExists != -1){
-                commandHandler.pluginsLoaded.splice(indexPluginAlreadyExists, 1);
+                this.commandHandler.pluginsLoaded.splice(indexPluginAlreadyExists, 1);
             }
 
             let path = process.cwd()+"/plugins/"+plugin.name;
             try {
-                let customPlugin = requireNew(path);
+                let customPlugin:any = new RequireClean(path);
                 plugin.instanciatedPlugin = new customPlugin.CommandHandler(this.commandHandler.fChatLibInstance, this.commandHandler.channelName);
                 let strAddedCommands = "";
 
@@ -107,11 +106,11 @@ export class CommandHandlerHelper{
                 strAddedCommands = strAddedCommands.substr(0, strAddedCommands.length - 2);
 
                 if (strAddedCommands == "") {
-                    console.log(`There weren't any loaded commands for the plugin ${plugin.name} (Channel: ${commandHandler.channelName}. Are you sure it exists?`);
+                    console.log(`There weren't any loaded commands for the plugin ${plugin.name} (Channel: ${this.commandHandler.channelName}. Are you sure it exists?`);
                 }
                 else {
-                    console.log(`The following commands were automatically loaded: ${strAddedCommands} (Channel: ${commandHandler.channelName}`);
-                    commandHandler.pluginsLoaded.push(plugin);
+                    console.log(`The following commands were automatically loaded: ${strAddedCommands} (Channel: ${this.commandHandler.channelName}`);
+                    this.commandHandler.pluginsLoaded.push(plugin);
 
                     this.internalUpdatePluginsFile();
                 }
@@ -119,10 +118,10 @@ export class CommandHandlerHelper{
             catch(ex){
                 if(ex && ex.code == "MODULE_NOT_FOUND"){
                     let safeToDisplayPath = path.substr(path.indexOf("plugins"));
-                    console.log(`Plugin ${plugin.name } couldn't be found. (Path: ${safeToDisplayPath} , Channel: ${commandHandler.channelName}`);
+                    console.log(`Plugin ${plugin.name } couldn't be found. (Path: ${safeToDisplayPath} , Channel: ${this.commandHandler.channelName}`);
                 }
                 else{
-                    console.log(`Unexpected error in channel ${commandHandler.channelName}: ${ex.toString()}`);
+                    console.log(`Unexpected error in channel ${this.commandHandler.channelName}: ${ex.toString()}`);
                 }
 
             }

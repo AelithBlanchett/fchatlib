@@ -18,7 +18,7 @@ export default class CommandHandler{
         if(this.fChatLibInstance.channels.get(channel) != null && this.fChatLibInstance.channels.get(channel) != null){
             this.pluginsLoaded = this.fChatLibInstance.channels.get(channel);
             if(this.pluginsLoaded.length > 0){
-                this.commandHandlerHelper.internalLoadPluginOnStart(this.pluginsLoaded, this);
+                this.commandHandlerHelper.internalLoadPluginOnStart(this.pluginsLoaded);
             }
         }
     }

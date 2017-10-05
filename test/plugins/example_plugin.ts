@@ -19,7 +19,7 @@ export class CommandHandler {
         this.fChatLibInstance.sendMessage(data.character + " wishes Bonjour! to " + word + " in " + data.channel, data.channel);
     };
 
-    rNg(args, data) {
+    rng(args, data) {
         this.fChatLibInstance.sendMessage("Random seed: "+this.randomId.toString(), data.channel);
     };
 }

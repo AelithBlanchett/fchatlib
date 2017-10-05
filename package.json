@@ -17,17 +17,20 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@types/jasmine": "^2.5.54",
+    "@types/jasmine": "^2.6.0",
     "@types/node": "^6.0.88",
     "async": "^1.5.2",
-    "glob": "*",
+    "caller-path": "^2.0.0",
+    "glob": "^7.1.2",
     "import-fresh": "^2.0.0",
     "jsonfile": "^2.3.1",
-    "request": "*",
-    "require-clean": "*",
-    "throttle-function": "*",
-    "typescript": "^2.5.2",
+    "lodash": "^4.17.4",
+    "path": "^0.12.7",
+    "request": "^2.83.0",
+    "resolve-from": "^3.0.0",
+    "throttle-function": "^0.1.0",
+    "typescript": "^2.5.3",
     "uuid": "^3.1.0",
-    "ws": "*"
+    "ws": "^3.2.0"
   }
 }
