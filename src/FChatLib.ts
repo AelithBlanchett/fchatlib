@@ -313,7 +313,7 @@ export default class FChatLib {
 
         try {
             if (fs.statSync(configDir+fileRoomsJs)) {
-                this.channels = new Map(jsonfile.readFileSync(configDir+fileRoomsJs));
+                this.channels = new Map(JSON.parse(jsonfile.readFileSync(configDir+fileRoomsJs)));
             }
         }
         catch(err){}
@@ -583,7 +583,21 @@ export default class FChatLib {
             fs.mkdirSync(configDir);
         }
 
-        jsonfile.writeFile(configDir+fileRoomsJs, [...this.channels]);
+        let ignoredKeys = ["instanciatedPlugin"];
+        let cache = [];
+        let tempJson = JSON.stringify([...this.channels], function(key, value) {
+            if (typeof value === 'object' && value !== null) {
+                if (cache.indexOf(value) !== -1 || ignoredKeys.indexOf(key) !== -1) {
+                    // Circular reference found, discard key
+                    return;
+                }
+                // Store value in our collection
+                cache.push(value);
+            }
+            return value;
+        });
+
+        jsonfile.writeFile(configDir+fileRoomsJs, tempJson);
     }
 
 
