@@ -22,12 +22,16 @@ myFchatBot.connect();
 Change the options variable, fill in your credentials, the character your bot show as, and the room ID where the bot will go first.
 If you don't know how to get that room ID I'm talking about, just open F-chat, go into the room you want to bot in, type /openroom to open it, then /code to get the code.
 The usual format for the code is like this: 'ADH-xxxxxxxxxxxxxxxxxxxx'
+
 4. Type 'node app.js', and watch the bot appear in the room!
+
 5. By default, there aren't any plugins loaded. The !help command will show you which commands are available.
 !availableplugins will show the list of plugins in the /plugins folder.
-!loadplugin pluginname will load the plugin /plugins/pluginname.js
+!loadplugin pluginname will load the plugin /plugins/pluginname.js, instanciating the pluginname class that's supposed to be in it.
 Once the bot loads a plugin or joins a room, the bot will save and remember to connect to these rooms, and automatically load these plugins.
-6. Type '!loadplugin my_plugin' in the chat, and it will tell you which commands it has loaded.
+
+6. Type '!loadplugin myplugin' in the chat, and it will tell you which commands it has loaded.
+Make sure the "myplugin" class is present in it, otherwise the plugin won't load.
 I'd advise you to copy/paste the [my_plugin]() plugin, and start from there. 
 Remember to load it with !loadplugin yourplugin, and to
 reload it with !reloadplugins

@@ -1,6 +1,6 @@
 let uuid = require('uuid');
 
-export class CommandHandler {
+export class ExamplePluginfsf {
     fChatLibInstance: any;
     channel: string;
     randomId: any;

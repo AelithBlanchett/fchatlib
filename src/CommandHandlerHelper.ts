@@ -22,8 +22,8 @@ export class CommandHandlerHelper{
         try {
             let plugin:IPlugin = {name:"", instanciatedPlugin: {}};
             let customPlugin:any = new RequireClean(path);
-            plugin.instanciatedPlugin = new customPlugin.CommandHandler(this.commandHandler.fChatLibInstance, this.commandHandler.channelName);
             plugin.name = pluginName;
+            plugin.instanciatedPlugin = new customPlugin[plugin.name](this.commandHandler.fChatLibInstance, this.commandHandler.channelName);
 
             let strAddedCommands = "";
 
@@ -47,6 +47,9 @@ export class CommandHandlerHelper{
             if(ex && ex.code == "MODULE_NOT_FOUND"){
                 let safeToDisplayPath = path.substr(path.indexOf("plugins"));
                 this.commandHandler.fChatLibInstance.sendMessage("Plugin "+pluginName+" couldn't be found. (Path: '" + safeToDisplayPath + "' )", commandHandler.channelName);
+            }
+            else if(ex && ex.message.indexOf("is not a constructor") != -1){
+                this.commandHandler.fChatLibInstance.sendMessage("The "+pluginName+" plugin doesn't contain a class named "+pluginName, commandHandler.channelName);
             }
             else{
                 this.commandHandler.fChatLibInstance.throwError("!loadplugin", ex.toString(), commandHandler.channelName);
@@ -96,7 +99,7 @@ export class CommandHandlerHelper{
             let path = process.cwd()+"/plugins/"+plugin.name;
             try {
                 let customPlugin:any = new RequireClean(path);
-                plugin.instanciatedPlugin = new customPlugin.CommandHandler(this.commandHandler.fChatLibInstance, this.commandHandler.channelName);
+                plugin.instanciatedPlugin = new customPlugin[plugin.name](this.commandHandler.fChatLibInstance, this.commandHandler.channelName);
                 let strAddedCommands = "";
 
                 for (let command of this.internalGetAllFuncs(plugin.instanciatedPlugin)) {
@@ -119,6 +122,9 @@ export class CommandHandlerHelper{
                 if(ex && ex.code == "MODULE_NOT_FOUND"){
                     let safeToDisplayPath = path.substr(path.indexOf("plugins"));
                     console.log(`Plugin ${plugin.name } couldn't be found. (Path: ${safeToDisplayPath} , Channel: ${this.commandHandler.channelName}`);
+                }
+                else if(ex && ex.message.indexOf("is not a constructor") != -1){
+                    console.log("The "+plugin.name+" plugin doesn't contain a class named "+plugin.name+", Channel:" + this.commandHandler.channelName);
                 }
                 else{
                     console.log(`Unexpected error in channel ${this.commandHandler.channelName}: ${ex.toString()}`);
