@@ -1,6 +1,6 @@
 import FChatLib from "./FChatLib";
 import {CommandHandlerHelper} from "./CommandHandlerHelper";
-import {IPlugin} from "./IPlugin";
+import {IPlugin} from "./Interfaces/IPlugin";
 
 export default class CommandHandler{
 

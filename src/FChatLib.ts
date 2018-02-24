@@ -1,8 +1,9 @@
 ﻿'use strict';
 import CommandHandler from "./CommandHandler";
-import {IPlugin} from "./IPlugin";
-import {IFChatLib} from "./IFChatLib";
-import {IConfig} from "./IConfig";
+import {IPlugin} from "./Interfaces/IPlugin";
+import {IFChatLib} from "./Interfaces/IFChatLib";
+import {IConfig} from "./Interfaces/IConfig";
+import {IMsgEvent} from "./Interfaces/IMsgEvent";
 let WebSocketClient = require('ws');
 let request = require("request");
 let jsonfile = require('jsonfile');
@@ -391,7 +392,7 @@ export default class FChatLib implements IFChatLib{
         this.updateRoomsConfig();
     }
 
-    commandListener(args:any, chanName:string) {
+    commandListener(args:IMsgEvent) {
         if(typeof this.commandHandlers[args.channel] !== "undefined")
         {
             try {
@@ -399,7 +400,7 @@ export default class FChatLib implements IFChatLib{
             }
             catch(ex){
                 console.log(ex);
-                this.throwError(args, ex.toString(), chanName);
+                this.throwError(args, ex.toString(), args.channel);
             }
         }
     }
@@ -622,92 +623,92 @@ export default class FChatLib implements IFChatLib{
                         break;
                     case "COL": //COL {"oplist":["Newhalf Wrestling","Nastasya Bates","Rinko Saitou"],"channel":"ADH-d0bde7daca1dbe6c79ba"}
                         for (let i =0; i< this.chatOPListListeners.length; i++) {
-                            this.chatOPListListeners[i].call(this,argument);
+                            this.chatOPListListeners[i].call(this, argument);
                         }
                         break;
                     case "COA": //COA { "channel": string, "character": string }
                         for (let i =0; i< this.chatOPAddedListeners.length; i++) {
-                            this.chatOPAddedListeners[i].call(this,argument);
+                            this.chatOPAddedListeners[i].call(this, argument);
                         }
                         break;
                     case "COR": //COR { "channel": string, "character": string }
                         for (let i =0; i< this.chatOPRemovedListeners.length; i++) {
-                            this.chatOPRemovedListeners[i].call(this,argument);
+                            this.chatOPRemovedListeners[i].call(this, argument);
                         }
                         break;
                     case "FLN": //FLN {"character":"The Kid"}
                         for (let i =0; i< this.offlineListeners.length; i++) {
-                            this.offlineListeners[i].call(this,argument);
+                            this.offlineListeners[i].call(this, argument);
                         }
                         break;
                     case "ICH": //ICH {"users": [{"identity": "Shadlor"}, {"identity": "Bunnie Patcher"}, {"identity": "DemonNeko"}, {"identity": "Desbreko"}, {"identity": "Robert Bell"}, {"identity": "Jayson"}, {"identity": "Valoriel Talonheart"}, {"identity": "Jordan Costa"}, {"identity": "Skip Weber"}, {"identity": "Niruka"}, {"identity": "Jake Brian Purplecat"}, {"identity": "Hexxy"}], "channel": "Frontpage", mode: "chat"}
                         for (let i =0; i< this.initialChannelDataListeners.length; i++) {
-                            this.initialChannelDataListeners[i].call(this,argument);
+                            this.initialChannelDataListeners[i].call(this, argument);
                         }
                         break;
                     case "JCH": //JCH {"title":"Newhalf Sexual Federation of Wrestling","channel":"ADH-d0bde7daca1dbe6c79ba","character":{"identity":"Kirijou Mitsuru"}}
                         for (let i =0; i< this.joinListeners.length; i++) {
-                            this.joinListeners[i].call(this,argument);
+                            this.joinListeners[i].call(this, argument);
                         }
                         break;
                     case "LCH": //LCH {"character":"Darent","channel":"ADH-d0bde7daca1dbe6c79ba"}
                         for (let i =0; i< this.leaveListeners.length; i++) {
-                            this.leaveListeners[i].call(this,argument);
+                            this.leaveListeners[i].call(this, argument);
                         }
                         break;
                     case "NLN": //FLN {"character":"The Kid"}
                         for (let i =0; i< this.onlineListeners.length; i++) {
-                            this.onlineListeners[i].call(this,argument);
+                            this.onlineListeners[i].call(this, argument);
                         }
                         break;
                     case "PIN": //PIN
                         for (let i =0; i< this.pingListeners.length; i++) {
-                            this.pingListeners[i].call(this,argument);
+                            this.pingListeners[i].call(this, argument);
                         }
                         break;
                     case "RLL"://RLL {"channel": string, "results": [int], "type": enum, "message": string, "rolls": [string], "character": string, "endresult": int} OR RLL {"target":"string","channel":"string","message":"string","type":"bottle","character":"string"}
                         for (let i =0; i< this.rollListeners.length; i++) {
-                            this.rollListeners[i].call(this,argument);
+                            this.rollListeners[i].call(this, argument);
                         }
                         break;
                     case "STA": //STA { status: "status", character: "channel", statusmsg:"statusmsg" }
                         for (let i =0; i< this.statusListeners.length; i++) {
-                            this.statusListeners[i].call(this,argument);
+                            this.statusListeners[i].call(this, argument);
                         }
                         break;
                     case "CBU": //CBU {"operator":string,"channel":string,"character":string}
                         for (let i =0; i< this.kickListeners.length; i++) {
-                            this.kickListeners[i].call(this,argument);
+                            this.kickListeners[i].call(this, argument);
                         }
                         break;
                     case "CKU": //CKU {"operator":string,"channel":string,"character":string}
                         for (let i =0; i< this.banListeners.length; i++) {
-                            this.banListeners[i].call(this,argument);
+                            this.banListeners[i].call(this, argument);
                         }
                         break;
                     case "CDS": //CDS { "channel": string, "description": string }
                         for (let i =0; i< this.descriptionChangeListeners.length; i++) {
-                            this.descriptionChangeListeners[i].call(this,argument);
+                            this.descriptionChangeListeners[i].call(this, argument);
                         }
                         break;
                     case "CIU": //CIU { "sender":string,"title":string,"name":string }
                         for (let i =0; i< this.inviteListeners.length; i++) {
-                            this.inviteListeners[i].call(this,argument);
+                            this.inviteListeners[i].call(this, argument);
                         }
                         break;
                     case "PRI": //PRI { "character": string, "message": string }
                         for (let i =0; i< this.privateMessageListeners.length; i++) {
-                            this.privateMessageListeners[i].call(this,argument);
+                            this.privateMessageListeners[i].call(this, argument);
                         }
                         break;
                     case "MSG": //MSG { "character": string, "message": string, "channel": string }
                         for (let i =0; i< this.messageListeners.length; i++) {
-                            this.messageListeners[i].call(this,argument, argument.channel);
+                            this.messageListeners[i].call(this, argument);
                         }
                         break;
                     case "VAR": //VAR { "variable": string, "value": int/float }
                         for (let i =0; i< this.variableListeners.length; i++) {
-                            this.variableListeners[i].call(this,argument);
+                            this.variableListeners[i].call(this, argument);
                         }
                         break;
                 }

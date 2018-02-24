@@ -1,5 +1,5 @@
 import CommandHandler from "./CommandHandler";
-import {IPlugin} from "./IPlugin";
+import {IPlugin} from "./Interfaces/IPlugin";
 
 import RequireClean from "./requireClean";
 

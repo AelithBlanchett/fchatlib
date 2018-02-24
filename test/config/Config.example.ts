@@ -1,4 +1,4 @@
-import {IConfig} from "../../src/IConfig";
+import {IConfig} from "../../src/Interfaces/IConfig";
 
 export default class Config implements IConfig{
     username:string = "username";
