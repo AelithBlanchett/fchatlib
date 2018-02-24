@@ -1,6 +1,6 @@
 import {IPlugin} from "./IPlugin";
 
-export interface IFChatLib {
+export default interface IFChatLib {
 
     addConnectionListener(fn:Function):void;
     removeConnectionListener(fn):void;
