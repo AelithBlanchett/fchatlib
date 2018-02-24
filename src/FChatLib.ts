@@ -1,6 +1,7 @@
 ﻿'use strict';
 import CommandHandler from "./CommandHandler";
 import {IPlugin} from "./IPlugin";
+import {IFChatLib} from "./IFChatLib";
 let WebSocketClient = require('ws');
 let request = require("request");
 let jsonfile = require('jsonfile');
@@ -11,231 +12,231 @@ let configDir = process.cwd()+"/config";
 let fileRoomsJs = "/config.rooms.js";
 
 
-export default class FChatLib {
+export default class FChatLib implements IFChatLib{
 
-    addConnectionListener(fn){
+    addConnectionListener(fn:Function):void{
         this.removeConnectionListener(fn);
         this.connectionListeners.push(fn);
     }
 
-    removeConnectionListener(fn){
+    removeConnectionListener(fn):void{
         let id = this.connectionListeners.indexOf(fn);
         if(id != -1){
             this.connectionListeners.splice(id,1);
         }
     }
 
-    addJoinListener(fn){
+    addJoinListener(fn):void{
         this.removeJoinListener(fn);
         this.joinListeners.push(fn);
     }
 
-    removeJoinListener(fn){
+    removeJoinListener(fn):void{
         let id = this.joinListeners.indexOf(fn);
         if(id != -1){
             this.joinListeners.splice(id,1);
         }
     }
 
-    addLeaveListener(fn){
+    addLeaveListener(fn):void{
         this.removeLeaveListener(fn);
         this.leaveListeners.push(fn);
     }
 
-    removeLeaveListener(fn){
+    removeLeaveListener(fn):void{
         let id = this.leaveListeners.indexOf(fn);
         if(id != -1){
             this.leaveListeners.splice(id,1);
         }
     }
 
-    addOnlineListener(fn){
+    addOnlineListener(fn):void{
         this.removeOnlineListener(fn);
         this.onlineListeners.push(fn);
     }
 
-    removeOnlineListener(fn){
+    removeOnlineListener(fn):void{
         let id = this.onlineListeners.indexOf(fn);
         if(id != -1){
             this.onlineListeners.splice(id,1);
         }
     }
 
-    addOfflineListener(fn){
+    addOfflineListener(fn):void{
         this.removeOfflineListener(fn);
         this.offlineListeners.push(fn);
     }
 
-    removeOfflineListener(fn){
+    removeOfflineListener(fn):void{
         let id = this.offlineListeners.indexOf(fn);
         if(id != -1){
             this.offlineListeners.splice(id,1);
         }
     }
 
-    addStatusListener(fn){
+    addStatusListener(fn):void{
         this.removeStatusListener(fn);
         this.statusListeners.push(fn);
     }
 
-    removeStatusListener(fn){
+    removeStatusListener(fn):void{
         let id = this.statusListeners.indexOf(fn);
         if(id != -1){
             this.statusListeners.splice(id,1);
         }
     }
 
-    addChatOPListListener(fn){
+    addChatOPListListener(fn):void{
         this.removeChatOPListListener(fn);
         this.chatOPListListeners.push(fn);
     }
 
-    removeChatOPListListener(fn){
+    removeChatOPListListener(fn):void{
         let id = this.chatOPListListeners.indexOf(fn);
         if(id != -1){
             this.chatOPListListeners.splice(id,1);
         }
     }
 
-    addChatOPAddedListener(fn){
+    addChatOPAddedListener(fn):void{
         this.removeChatOPAddedListener(fn);
         this.chatOPAddedListeners.push(fn);
     }
 
-    removeChatOPAddedListener(fn){
+    removeChatOPAddedListener(fn):void{
         let id = this.chatOPAddedListeners.indexOf(fn);
         if(id != -1){
             this.chatOPAddedListeners.splice(id,1);
         }
     }
 
-    addChatOPRemovedListener(fn){
+    addChatOPRemovedListener(fn):void{
         this.removeChatOPRemovedListener(fn);
         this.chatOPRemovedListeners.push(fn);
     }
 
-    removeChatOPRemovedListener(fn){
+    removeChatOPRemovedListener(fn):void{
         let id = this.chatOPRemovedListeners.indexOf(fn);
         if(id != -1){
             this.chatOPRemovedListeners.splice(id,1);
         }
     }
 
-    addInviteListener(fn){
+    addInviteListener(fn):void{
         this.removeInviteListener(fn);
         this.inviteListeners.push(fn);
     }
 
-    removeInviteListener(fn){
+    removeInviteListener(fn):void{
         let id = this.inviteListeners.indexOf(fn);
         if(id != -1){
             this.inviteListeners.splice(id,1);
         }
     }
 
-    addKickListener(fn){
+    addKickListener(fn):void{
         this.removeKickListener(fn);
         this.kickListeners.push(fn);
     }
 
-    removeKickListener(fn){
+    removeKickListener(fn):void{
         let id = this.kickListeners.indexOf(fn);
         if(id != -1){
             this.kickListeners.splice(id,1);
         }
     }
 
-    addBanListener(fn){
+    addBanListener(fn):void{
         this.removeBanListener(fn);
         this.banListeners.push(fn);
     }
 
-    removeBanListener(fn){
+    removeBanListener(fn):void{
         let id = this.banListeners.indexOf(fn);
         if(id != -1){
             this.banListeners.splice(id,1);
         }
     }
 
-    addDescriptionChangeListener(fn){
+    addDescriptionChangeListener(fn):void{
         this.removeDescriptionChangeListener(fn);
         this.descriptionChangeListeners.push(fn);
     }
 
-    removeDescriptionChangeListener(fn){
+    removeDescriptionChangeListener(fn):void{
         let id = this.descriptionChangeListeners.indexOf(fn);
         if(id != -1){
             this.descriptionChangeListeners.splice(id,1);
         }
     }
 
-    addPingListener(fn){
+    addPingListener(fn):void{
         this.removePingListener(fn);
         this.pingListeners.push(fn);
     }
 
-    removePingListener(fn){
+    removePingListener(fn):void{
         let id = this.pingListeners.indexOf(fn);
         if(id != -1){
             this.pingListeners.splice(id,1);
         }
     }
 
-    addInitialChannelDataListener(fn){
+    addInitialChannelDataListener(fn):void{
         this.removeInitialChannelDataListener(fn);
         this.initialChannelDataListeners.push(fn);
     }
 
-    removeInitialChannelDataListener(fn){
+    removeInitialChannelDataListener(fn):void{
         let id = this.initialChannelDataListeners.indexOf(fn);
         if(id != -1){
             this.initialChannelDataListeners.splice(id,1);
         }
     }
 
-    addMessageListener(fn){
+    addMessageListener(fn):void{
         this.removeMessageListener(fn);
         this.messageListeners.push(fn);
     }
 
-    removeMessageListener(fn){
+    removeMessageListener(fn):void{
         let id = this.messageListeners.indexOf(fn);
         if(id != -1){
             this.messageListeners.splice(id,1);
         }
     }
 
-    addPrivateMessageListener(fn){
+    addPrivateMessageListener(fn):void{
         //this.removePrivateMessageListener(fn);
         //this.privateMessageListeners.push(fn);
         this.privateMessageListeners = [fn];
     }
 
-    removePrivateMessageListener(fn){
+    removePrivateMessageListener(fn):void{
         let id = this.privateMessageListeners.indexOf(fn);
         if(id != -1){
             this.privateMessageListeners.splice(id,1);
         }
     }
 
-    addRollListener(fn){
+    addRollListener(fn):void{
         this.removeRollListener(fn);
         this.rollListeners.push(fn);
     }
 
-    removeRollListener(fn){
+    removeRollListener(fn):void{
         let id = this.rollListeners.indexOf(fn);
         if(id != -1){
             this.rollListeners.splice(id,1);
         }
     }
 
-    addVariableListener(fn){
+    addVariableListener(fn):void{
         this.removeVariableListener(fn);
         this.variableListeners.push(fn);
     }
 
-    removeVariableListener(fn){
+    removeVariableListener(fn):void{
         let id = this.variableListeners.indexOf(fn);
         if(id != -1){
             this.variableListeners.splice(id,1);
@@ -264,8 +265,8 @@ export default class FChatLib {
     statusListeners = [];
     variableListeners = [];
 
-    usersInChannel = [];
-    chatOPsInChannel = [];
+    usersInChannel:string[][] = [];
+    chatOPsInChannel:string[][] = [];
     commandHandlers = [];
 
     channels:Map<string, Array<IPlugin>> = new Map<string, Array<IPlugin>>();
@@ -282,7 +283,7 @@ export default class FChatLib {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    async sendData(messageType: string, content: string) {
+    async sendData(messageType: string, content: string):Promise<void>{
         this.commandsInQueue++;
         let currentTime = parseInt(process.uptime().toString(), 10);
 
@@ -325,40 +326,17 @@ export default class FChatLib {
     }
 
     //create one commandHandler per room
-    generateCommandHandlers() {
+    generateCommandHandlers():void{
         for(let room of this.channels.keys()){
             this.commandHandlers[room] = new CommandHandler(this, room);
         }
     }
 
-    private RateLimit(fn, delay, context) {
-        let queue = [], timer = null;
-
-        function processQueue() {
-            let item = queue.shift();
-            if (item)
-                fn.apply(item.context, item.arguments);
-        }
-
-        return function limited() {
-            queue.push({
-                context: context || this,
-                arguments: [].slice.call(arguments)
-            });
-            if (!timer) {
-                processQueue();  // start immediately on the first invocation
-                timer = setInterval(processQueue, delay);
-            }
-        }
-
-    }
-
-    setFloodLimit(delay){
+    setFloodLimit(delay):void{
         this.floodLimit = delay;
-        //this.sendData = this.RateLimit(this.sendWS, this.floodLimit, this);
     }
 
-    async connect() {
+    async connect():Promise<void>{
         this.ws = null;
         this.setFloodLimit(2);
 
@@ -535,50 +513,43 @@ export default class FChatLib {
         return this.usersInChannel[channel];
     }
 
-    getAllUsersList(){
-        return this.usersInChannel;
+    getAllUsersList():string[]{
+        return [].concat(...this.usersInChannel);
     }
 
     getChatOPList(channel){
-        if(typeof this.chatOPsInChannel[channel] !== "object")
-        {
-            return [];
-        }
-        else{
-            return this.chatOPsInChannel[channel];
-        }
-
+        return (this.chatOPsInChannel[channel] != null ? [] : this.chatOPsInChannel[channel]);
     }
 
-    isUserChatOP(username, channel){
+    isUserChatOP(username, channel):boolean{
         return (this.getChatOPList(channel).indexOf(username) != -1 || username == this.config.master);
     }
 
-    isUserMaster(username){
+    isUserMaster(username):boolean{
         return (username == this.config.master);
     }
 
-    disconnect(){
+    disconnect():void{
         this.ws.close();
     }
 
-    restart(){
+    restart():void{
         this.disconnect();
         setTimeout(this.connect,2000);
     }
 
-    softRestart(channel){
+    softRestart(channel):void{
         this.commandHandlers[channel] = new CommandHandler(this, channel);
     }
 
-    roll(customDice, channel){
+    roll(customDice, channel):void{
         let json:any = {};
         json.dice = customDice || "1d10";
         json.channel = channel;
         this.sendData("RLL", json);
     }
 
-    updateRoomsConfig(){
+    updateRoomsConfig():void{
         if (!fs.existsSync(configDir)){
             fs.mkdirSync(configDir);
         }
@@ -601,7 +572,7 @@ export default class FChatLib {
     }
 
 
-    startWebsockets(json) {
+    startWebsockets(json):void {
         if (this.config.debug == true) {
             this.ws = new WebSocketClient('ws://chat.f-list.net:8722');
         }
@@ -634,7 +605,7 @@ export default class FChatLib {
             }
             if (data != null) {
                 command = argument = "";
-                command = splitOnce(data, " ")[0].trim();
+                command = this.splitOnce(data, " ")[0].trim();
                 try{
                     if(data.substring(command.length).trim() != ""){
                         argument = JSON.parse(data.substring(command.length).trim());
@@ -644,97 +615,97 @@ export default class FChatLib {
                 }
                 switch (command) {
                     case "CON"://CON { "count": int }
-                        for (var i =0; i< this.connectionListeners.length; i++) {
+                        for (let i =0; i< this.connectionListeners.length; i++) {
                             this.connectionListeners[i].call(this, argument);
                         }
                         break;
                     case "COL": //COL {"oplist":["Newhalf Wrestling","Nastasya Bates","Rinko Saitou"],"channel":"ADH-d0bde7daca1dbe6c79ba"}
-                        for (var i =0; i< this.chatOPListListeners.length; i++) {
+                        for (let i =0; i< this.chatOPListListeners.length; i++) {
                             this.chatOPListListeners[i].call(this,argument);
                         }
                         break;
                     case "COA": //COA { "channel": string, "character": string }
-                        for (var i =0; i< this.chatOPAddedListeners.length; i++) {
+                        for (let i =0; i< this.chatOPAddedListeners.length; i++) {
                             this.chatOPAddedListeners[i].call(this,argument);
                         }
                         break;
                     case "COR": //COR { "channel": string, "character": string }
-                        for (var i =0; i< this.chatOPRemovedListeners.length; i++) {
+                        for (let i =0; i< this.chatOPRemovedListeners.length; i++) {
                             this.chatOPRemovedListeners[i].call(this,argument);
                         }
                         break;
                     case "FLN": //FLN {"character":"The Kid"}
-                        for (var i =0; i< this.offlineListeners.length; i++) {
+                        for (let i =0; i< this.offlineListeners.length; i++) {
                             this.offlineListeners[i].call(this,argument);
                         }
                         break;
                     case "ICH": //ICH {"users": [{"identity": "Shadlor"}, {"identity": "Bunnie Patcher"}, {"identity": "DemonNeko"}, {"identity": "Desbreko"}, {"identity": "Robert Bell"}, {"identity": "Jayson"}, {"identity": "Valoriel Talonheart"}, {"identity": "Jordan Costa"}, {"identity": "Skip Weber"}, {"identity": "Niruka"}, {"identity": "Jake Brian Purplecat"}, {"identity": "Hexxy"}], "channel": "Frontpage", mode: "chat"}
-                        for (var i =0; i< this.initialChannelDataListeners.length; i++) {
+                        for (let i =0; i< this.initialChannelDataListeners.length; i++) {
                             this.initialChannelDataListeners[i].call(this,argument);
                         }
                         break;
                     case "JCH": //JCH {"title":"Newhalf Sexual Federation of Wrestling","channel":"ADH-d0bde7daca1dbe6c79ba","character":{"identity":"Kirijou Mitsuru"}}
-                        for (var i =0; i< this.joinListeners.length; i++) {
+                        for (let i =0; i< this.joinListeners.length; i++) {
                             this.joinListeners[i].call(this,argument);
                         }
                         break;
                     case "LCH": //LCH {"character":"Darent","channel":"ADH-d0bde7daca1dbe6c79ba"}
-                        for (var i =0; i< this.leaveListeners.length; i++) {
+                        for (let i =0; i< this.leaveListeners.length; i++) {
                             this.leaveListeners[i].call(this,argument);
                         }
                         break;
                     case "NLN": //FLN {"character":"The Kid"}
-                        for (var i =0; i< this.onlineListeners.length; i++) {
+                        for (let i =0; i< this.onlineListeners.length; i++) {
                             this.onlineListeners[i].call(this,argument);
                         }
                         break;
                     case "PIN": //PIN
-                        for (var i =0; i< this.pingListeners.length; i++) {
+                        for (let i =0; i< this.pingListeners.length; i++) {
                             this.pingListeners[i].call(this,argument);
                         }
                         break;
                     case "RLL"://RLL {"channel": string, "results": [int], "type": enum, "message": string, "rolls": [string], "character": string, "endresult": int} OR RLL {"target":"string","channel":"string","message":"string","type":"bottle","character":"string"}
-                        for (var i =0; i< this.rollListeners.length; i++) {
+                        for (let i =0; i< this.rollListeners.length; i++) {
                             this.rollListeners[i].call(this,argument);
                         }
                         break;
                     case "STA": //STA { status: "status", character: "channel", statusmsg:"statusmsg" }
-                        for (var i =0; i< this.statusListeners.length; i++) {
+                        for (let i =0; i< this.statusListeners.length; i++) {
                             this.statusListeners[i].call(this,argument);
                         }
                         break;
                     case "CBU": //CBU {"operator":string,"channel":string,"character":string}
-                        for (var i =0; i< this.kickListeners.length; i++) {
+                        for (let i =0; i< this.kickListeners.length; i++) {
                             this.kickListeners[i].call(this,argument);
                         }
                         break;
                     case "CKU": //CKU {"operator":string,"channel":string,"character":string}
-                        for (var i =0; i< this.banListeners.length; i++) {
+                        for (let i =0; i< this.banListeners.length; i++) {
                             this.banListeners[i].call(this,argument);
                         }
                         break;
                     case "CDS": //CDS { "channel": string, "description": string }
-                        for (var i =0; i< this.descriptionChangeListeners.length; i++) {
+                        for (let i =0; i< this.descriptionChangeListeners.length; i++) {
                             this.descriptionChangeListeners[i].call(this,argument);
                         }
                         break;
                     case "CIU": //CIU { "sender":string,"title":string,"name":string }
-                        for (var i =0; i< this.inviteListeners.length; i++) {
+                        for (let i =0; i< this.inviteListeners.length; i++) {
                             this.inviteListeners[i].call(this,argument);
                         }
                         break;
                     case "PRI": //PRI { "character": string, "message": string }
-                        for (var i =0; i< this.privateMessageListeners.length; i++) {
+                        for (let i =0; i< this.privateMessageListeners.length; i++) {
                             this.privateMessageListeners[i].call(this,argument);
                         }
                         break;
                     case "MSG": //MSG { "character": string, "message": string, "channel": string }
-                        for (var i =0; i< this.messageListeners.length; i++) {
+                        for (let i =0; i< this.messageListeners.length; i++) {
                             this.messageListeners[i].call(this,argument, argument.channel);
                         }
                         break;
                     case "VAR": //VAR { "variable": string, "value": int/float }
-                        for (var i =0; i< this.variableListeners.length; i++) {
+                        for (let i =0; i< this.variableListeners.length; i++) {
                             this.variableListeners[i].call(this,argument);
                         }
                         break;
@@ -743,13 +714,14 @@ export default class FChatLib {
         });
     }
 
+    splitOnce(str, delim) {
+        let components = str.split(delim);
+        let result = [components.shift()];
+        if (components.length) {
+            result.push(components.join(delim));
+        }
+        return result;
+    }
+
 }
 
-function splitOnce(str, delim) {
-    var components = str.split(delim);
-    var result = [components.shift()];
-    if (components.length) {
-        result.push(components.join(delim));
-    }
-    return result;
-}
