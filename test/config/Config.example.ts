@@ -1,3 +1,5 @@
+import {IConfig} from "../../src/IConfig";
+
 export default class Config implements IConfig{
     username:string = "username";
     password: string = "password";

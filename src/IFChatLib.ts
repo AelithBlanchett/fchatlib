@@ -1,4 +1,5 @@
 import {IPlugin} from "./IPlugin";
+import {IConfig} from "./IConfig";
 
 export interface IFChatLib {
 

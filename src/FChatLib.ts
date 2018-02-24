@@ -2,6 +2,7 @@
 import CommandHandler from "./CommandHandler";
 import {IPlugin} from "./IPlugin";
 import {IFChatLib} from "./IFChatLib";
+import {IConfig} from "./IConfig";
 let WebSocketClient = require('ws');
 let request = require("request");
 let jsonfile = require('jsonfile');

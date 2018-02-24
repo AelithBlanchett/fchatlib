@@ -1,4 +1,4 @@
-interface IConfig{
+export interface IConfig{
     username:string;
     password:string;
     character:string
