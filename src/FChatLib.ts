@@ -209,9 +209,8 @@ export default class FChatLib implements IFChatLib{
     }
 
     addPrivateMessageListener(fn):void{
-        //this.removePrivateMessageListener(fn);
-        //this.privateMessageListeners.push(fn);
-        this.privateMessageListeners = [fn];
+        this.removePrivateMessageListener(fn);
+        this.privateMessageListeners.push(fn);
     }
 
     removePrivateMessageListener(fn):void{
@@ -245,6 +244,90 @@ export default class FChatLib implements IFChatLib{
         }
     }
 
+    addGenericEventListener(fn):void{
+        this.removeGenericEventListener(fn);
+        this.genericEventListeners.push(fn);
+    }
+
+    removeGenericEventListener(fn):void{
+        let id = this.genericEventListeners.indexOf(fn);
+        if(id != -1){
+            this.genericEventListeners.splice(id,1);
+        }
+    }
+
+    addListListener(fn):void{
+        this.removeListListener(fn);
+        this.listListeners.push(fn);
+    }
+
+    removeListListener(fn):void{
+        let id = this.listListeners.indexOf(fn);
+        if(id != -1){
+            this.listListeners.splice(id,1);
+        }
+    }
+
+    addFriendsAndBookmarksListener(fn):void{
+        this.removeGenericEventListener(fn);
+        this.friendsAndBookmarksListeners.push(fn);
+    }
+
+    removeFriendsAndBookmarksListener(fn):void{
+        let id = this.friendsAndBookmarksListeners.indexOf(fn);
+        if(id != -1){
+            this.friendsAndBookmarksListeners.splice(id,1);
+        }
+    }
+
+    addIdentityListener(fn):void{
+        this.removeIdentityListener(fn);
+        this.identityListeners.push(fn);
+    }
+
+    removeIdentityListener(fn):void{
+        let id = this.identityListeners.indexOf(fn);
+        if(id != -1){
+            this.identityListeners.splice(id,1);
+        }
+    }
+
+    addSystemMessagesListener(fn):void{
+        this.removeSystemMessagesListener(fn);
+        this.systemMessageListeners.push(fn);
+    }
+
+    removeSystemMessagesListener(fn):void{
+        let id = this.systemMessageListeners.indexOf(fn);
+        if(id != -1){
+            this.systemMessageListeners.splice(id,1);
+        }
+    }
+
+    addTypingStatusListener(fn):void{
+        this.removeTypingStatusListener(fn);
+        this.typingStatusListeners.push(fn);
+    }
+
+    removeTypingStatusListener(fn):void{
+        let id = this.typingStatusListeners.indexOf(fn);
+        if(id != -1){
+            this.typingStatusListeners.splice(id,1);
+        }
+    }
+
+    addProfileDataListener(fn):void{
+        this.removeProfileDataListener(fn);
+        this.profileDataListeners.push(fn);
+    }
+
+    removeProfileDataListener(fn):void{
+        let id = this.profileDataListeners.indexOf(fn);
+        if(id != -1){
+            this.profileDataListeners.splice(id,1);
+        }
+    }
+
     config:IConfig = null;
 
     banListeners = [];
@@ -266,12 +349,21 @@ export default class FChatLib implements IFChatLib{
     rollListeners = [];
     statusListeners = [];
     variableListeners = [];
+    genericEventListeners = [];
+    listListeners = [];
+    friendsAndBookmarksListeners = [];
+    identityListeners = [];
+    typingStatusListeners = [];
+    systemMessageListeners = [];
+    profileDataListeners = [];
 
     usersInChannel:string[][] = [];
     chatOPsInChannel:string[][] = [];
     commandHandlers = [];
+    users:string[][] = [];
 
     channels:Map<string, Array<IPlugin>> = new Map<string, Array<IPlugin>>();
+    channelNames:Map<string, string> = new Map<string, string>();
 
     ws:any;
 
@@ -357,6 +449,14 @@ export default class FChatLib implements IFChatLib{
         this.addOfflineListener(this.removeUserFromChannels);
         this.addLeaveListener(this.removeUserFromList);
         this.addJoinListener(this.addUserToList);
+        this.addJoinListener(this.saveChannelNames);
+
+        //global user state management
+        this.addListListener(this.addUserListToGlobalState);
+        this.addOnlineListener(this.onChangeUpdateUserState);
+        this.addOfflineListener(this.onChangeUpdateUserState);
+        this.addStatusListener(this.onChangeUpdateUserState);
+        
 
         //permissions handling
         this.addChatOPListListener(this.addChatOPsToList);
@@ -443,6 +543,60 @@ export default class FChatLib implements IFChatLib{
         }
     }
 
+    saveChannelNames(args) {
+        this.channelNames[args.channel] = args.title;
+    }
+
+    addUserListToGlobalState(args) {
+        args.characters.forEach(character => {
+            this.users[character[0]] = character;
+        });
+    }
+
+    onChangeUpdateUserState(args) {
+        let character = "";
+        let gender = "";
+        let status = "";
+        let statusmsg = "";
+
+        if(args.identity){
+            character = args.identity;
+        }
+        if(args.character){
+            character = args.character;
+        }
+
+        if(args.gender){
+            gender = args.gender;
+        }
+
+        if(args.status){
+            status = args.status;
+        }
+
+        if(args.statusmsg){
+            statusmsg = args.statusmsg;
+        }
+
+        if(character != ""){
+            if(this.users[character] === undefined){
+                this.users[character] = [character, "", "online", ""];
+            }
+    
+            if(gender != ""){
+                this.users[character][1] = gender;
+            }
+            
+            if(status != ""){
+                this.users[character][2] = status;
+            }
+    
+            if(statusmsg != ""){
+                this.users[character][3] = statusmsg;
+            }
+        }       
+    }
+
     //permissions
     addChatOPsToList(args) {
         if(typeof this.chatOPsInChannel[args.channel] !== "object"){this.chatOPsInChannel[args.channel] = [];}
@@ -508,6 +662,33 @@ export default class FChatLib implements IFChatLib{
         json.message = message;
         json.recipient = character;
         this.sendData('PRI', json);
+    }
+
+    getProfileData(character){
+        let json:any = {};
+        json.character = character;
+        this.sendData('PRO', json);
+    }
+
+    setIsTyping(){
+        let json:any = {};
+        json.character = this.config.character;
+        json.status = "typing"
+        this.sendData('TPN', json);
+    }
+
+    setIsTypingPaused(){
+        let json:any = {};
+        json.character = this.config.character;
+        json.status = "paused"
+        this.sendData('TPN', json);
+    }
+
+    setIsNotTyping(){
+        let json:any = {};
+        json.character = this.config.character;
+        json.status = "clear"
+        this.sendData('TPN', json);
     }
 
     getUserList(channel){
@@ -576,10 +757,10 @@ export default class FChatLib implements IFChatLib{
 
     startWebsockets(json):void {
         if (this.config.debug == true) {
-            this.ws = new WebSocketClient('ws://chat.f-list.net:8722');
+            this.ws = new WebSocketClient('wss://chat.f-list.net/chat2');
         }
         else {
-            this.ws = new WebSocketClient('ws://chat.f-list.net:9722');
+            this.ws = new WebSocketClient('wss://chat.f-list.net/chat2');
         }
 
         this.ws.on('open', (data) => {
@@ -709,6 +890,41 @@ export default class FChatLib implements IFChatLib{
                     case "VAR": //VAR { "variable": string, "value": int/float }
                         for (let i =0; i< this.variableListeners.length; i++) {
                             this.variableListeners[i].call(this, argument);
+                        }
+                        break;
+                    case "LIS": //LIS {"characters": [["Alexandrea", "Female", "online", ""], ["Fa Mulan", "Female", "busy", "Away, check out my new alt Aya Kinjou!"]]}
+                        for (let i =0; i< this.listListeners.length; i++) {
+                            this.listListeners[i].call(this, argument);
+                        }
+                        break;
+                    case "FRL": //FRL {"characters":["Aelith Blanchette"]}
+                        for (let i =0; i< this.friendsAndBookmarksListeners.length; i++) {
+                            this.friendsAndBookmarksListeners[i].call(this, argument);
+                        }
+                        break;
+                    case "IDN": //IDN { "character": string }
+                        for (let i =0; i< this.identityListeners.length; i++) {
+                            this.identityListeners[i].call(this, argument);
+                        }
+                        break;
+                    case "TPN": //TPN { "character": string, "status": enum }
+                        for (let i =0; i< this.typingStatusListeners.length; i++) {
+                            this.typingStatusListeners[i].call(this, argument);
+                        }
+                        break;
+                    case "SYS": //SYS { "message": string, "channel": string }
+                        for (let i =0; i< this.systemMessageListeners.length; i++) {
+                            this.systemMessageListeners[i].call(this, argument);
+                        }
+                        break;
+                    case "PRD": //PRD { "type": enum, "message": string, "key": string, "value": string }
+                        for (let i =0; i< this.profileDataListeners.length; i++) {
+                            this.profileDataListeners[i].call(this, argument);
+                        }
+                        break;
+                    default:
+                        for (let i =0; i< this.genericEventListeners.length; i++) {
+                            this.genericEventListeners[i].call(this, argument);
                         }
                         break;
                 }

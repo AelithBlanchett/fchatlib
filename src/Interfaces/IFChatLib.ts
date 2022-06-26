@@ -63,6 +63,13 @@ export interface IFChatLib {
     rollListeners:any;
     statusListeners:any;
     variableListeners:any;
+    genericEventListeners:any;
+    listListeners:any;
+    friendsAndBookmarksListeners:any;
+    identityListeners:any;
+    typingStatusListeners:any;
+    systemMessageListeners:any;
+    profileDataListeners:any;
 
     usersInChannel:any;
     chatOPsInChannel:any;
